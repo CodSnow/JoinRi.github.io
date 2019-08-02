@@ -1,0 +1,35 @@
+<html>
+<head>
+  <title>Hive</title>
+  <basefont face="微软雅黑" size="2" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="exporter-version" content="YXBJ Windows/600753 (zh-CN, DDL); Windows/10.0.0 (Win64);"/>
+  <style>
+    body, td {
+      font-family: 微软雅黑;
+      font-size: 10pt;
+    }
+  </style>
+    <link rel="stylesheet" type="text/css" href="../css/main.css" /> 
+</head>
+<body>
+<h1>目录</h1>
+<ul id="menu">
+<li><a href="../notes/Saprk.html">Saprk</a></li>
+<li><a href="../notes/HDFS.html">HDFS</a></li>
+<li><a href="../notes/Flume.html">Flume</a></li>
+<li><a href="../notes/Yarn.html">Yarn</a></li>
+<li><a href="../notes/Zookeeper.html">Zookeeper</a></li>
+<li><a href="../notes/HBase--分布式数据库.html">HBase</a></li>
+<li><a href="../notes/Hive.html">Hive</a></li>
+<li><a href="../notes/Loader.html">Loader</a></li>
+<li><a href="../notes/Kafka.html">Kafka</a></li>
+<li><a href="../notes/Flink.html">Flink</a></li>
+</ul>
+<br><br><br><br><br>
+<a name="523"/>
+<h1>Hive</h1>
+
+<div>
+<span><div><span style="font-size: 22pt; font-family: &quot;FrutigerNext LT Regular&quot;;"><b>目标：</b></span></div><div><span style="font-size: 22.0pt; font-family: &quot;FrutigerNext LT Regular&quot;; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: black; mso-color-index: 1; mso-font-kerning: 12.0pt; language: en-US; font-weight: bold; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: text1; mso-style-textfill-fill-color: black; mso-style-textfill-fill-alpha: 100.0%;"><br/></span></div><div><span style="font-size: 22.0pt; font-family: &quot;FrutigerNext LT Regular&quot;; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: black; mso-color-index: 1; mso-font-kerning: 12.0pt; language: en-US; font-weight: bold; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: text1; mso-style-textfill-fill-color: black; mso-style-textfill-fill-alpha: 100.0%;"><br/></span></div><div><span style="font-size: 22.0pt; font-family: &quot;FrutigerNext LT Regular&quot;; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: black; mso-color-index: 1; mso-font-kerning: 12.0pt; language: en-US; font-weight: bold; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: text1; mso-style-textfill-fill-color: black; mso-style-textfill-fill-alpha: 100.0%;">Hive</span><span style="font-size: 22.0pt; font-family: 华文细黑; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: black; mso-color-index: 1; mso-font-kerning: 12.0pt; language: zh-CN; font-weight: bold; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: text1; mso-style-textfill-fill-color: black; mso-style-textfill-fill-alpha: 100.0%;">概述</span></div><div><span style="font-size: 22.0pt; font-family: &quot;FrutigerNext LT Regular&quot;; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: #7F7F7F; mso-color-index: 0; mso-font-kerning: 12.0pt; language: en-US; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: background1; mso-style-textfill-fill-color: #7F7F7F; mso-style-textfill-fill-alpha: 100.0%; mso-style-textfill-fill-colortransforms: lumm=50000;">Hive</span><span style="font-size: 22.0pt; font-family: 华文细黑; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: #7F7F7F; mso-color-index: 0; language: zh-CN; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: background1; mso-style-textfill-fill-color: #7F7F7F; mso-style-textfill-fill-alpha: 100.0%; mso-style-textfill-fill-colortransforms: lumm=50000;">功能与架构</span></div><div><span style="font-size: 22.0pt; font-family: &quot;FrutigerNext LT Regular&quot;; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: #7F7F7F; mso-color-index: 0; mso-font-kerning: 12.0pt; language: zu; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: background1; mso-style-textfill-fill-color: #7F7F7F; mso-style-textfill-fill-alpha: 100.0%; mso-style-textfill-fill-colortransforms: lumm=50000;">Hive</span><span style="font-size: 22.0pt; font-family: 华文细黑; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: #7F7F7F; mso-color-index: 0; language: zh-CN; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: background1; mso-style-textfill-fill-color: #7F7F7F; mso-style-textfill-fill-alpha: 100.0%; mso-style-textfill-fill-colortransforms: lumm=50000;">基本</span><span style="font-size: 22.0pt; font-family: 华文细黑; mso-ascii-font-family: &quot;FrutigerNext LT Regular&quot;; mso-fareast-font-family: 华文细黑; mso-bidi-font-family: 华文细黑; mso-ascii-theme-font: minor-latin; mso-fareast-theme-font: minor-fareast; color: #7F7F7F; mso-color-index: 0; language: zh-CN; mso-style-textfill-type: solid; mso-style-textfill-fill-themecolor: background1; mso-style-textfill-fill-color: #7F7F7F; mso-style-textfill-fill-alpha: 100.0%; mso-style-textfill-fill-colortransforms: lumm=50000;">操作</span></div></span>
+</div></body></html> 
